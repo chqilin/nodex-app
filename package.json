@@ -1,20 +1,24 @@
 {
   "name": "nodex-app",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "A app framework based on nodex-libs.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "start": "npm run build && node lib/test/app.js",
     "build": "rimraf ./lib && tsc -p ./tsconfig.json",
     "prepublishOnly": "npm run build",
-    "test": "jest --runInBand --detectOpenHandles",
-    "test-app": "node lib/test/app.js"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "files": [
     "lib",
     "README.md",
     "LICENCE"
   ],
+  "dependencies": {
+    "nodex-libs": "^2.4.0",
+    "reflect-metadata": "^0.1.13"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.24",
     "@types/mongodb": "^3.6.20",
@@ -35,8 +39,5 @@
   "bugs": {
     "url": "https://github.com/chqilin/nodex-app/issues"
   },
-  "homepage": "https://github.com/chqilin/nodex-app#readme",
-  "dependencies": {
-    "nodex-libs": "^2.4.0"
-  }
+  "homepage": "https://github.com/chqilin/nodex-app#readme"
 }

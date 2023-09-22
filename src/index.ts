@@ -1,3 +1,7 @@
 
-export { Module, ModuleManager } from "./Module";
-export { Engine } from "./Engine"
+export * from "./libs/Class";
+
+export { Application } from "./app/Application"
+export { Module, ModuleManager } from "./app/Module";
+
+export { HttpServiceOptions, HttpServiceModule } from "./modules/HttpServiceModule";

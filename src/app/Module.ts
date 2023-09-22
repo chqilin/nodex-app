@@ -1,9 +1,15 @@
 import { error } from "nodex-libs";
-import { Class } from "./libs/Class"
+import {Class, Constructor} from "../libs/Class"
 
 export class Module {
-    public name(): string {
-        return '';
+    private _name: string;
+
+    constructor(name?: string) {
+        this._name = name || this.constructor.name;
+    }
+
+    public get name(): string {
+        return this._name;
     }
 
     public async init(): Promise<void> {
@@ -45,7 +51,7 @@ export class ModuleManager {
     }
 
     public install(m: Module) {
-        const mod = this.modules.get(m.name());
+        const mod = this.modules.get(m.name);
         if(mod) {
             throw error(
                 `ERR_INSTALL_MODULE_FAILED`,
@@ -53,16 +59,21 @@ export class ModuleManager {
             );
         }
 
-        this.modules.set(m.name(), m);
+        this.modules.set(m.name, m);
     }
 
-    public select<T extends Module>(name: string): T {
-        const m = this.modules.get(name);
-
-        return m as T;
+    public select<T extends Module>(nameOrType: string | Constructor<T>): T {
+        if(typeof(nameOrType) === 'string') {
+            const m = this.modules.get(nameOrType);
+            return m as T;
+        }
+        else {
+            const m = this.modules.get(nameOrType.name)
+            return m as T;
+        }
     }
 
-
+    
 }
 
 export let ModuleInstaller = {
