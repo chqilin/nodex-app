@@ -1,6 +1,6 @@
 {
   "name": "nodex-app",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "A app framework based on nodex-libs.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -16,7 +16,7 @@
     "LICENCE"
   ],
   "dependencies": {
-    "nodex-libs": "^2.4.0",
+    "nodex-libs": "^2.4.3",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

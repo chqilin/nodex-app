@@ -1,4 +1,6 @@
 
+export * from "nodex-libs";
+
 export * from "./libs/Class";
 
 export { Application } from "./app/Application"
