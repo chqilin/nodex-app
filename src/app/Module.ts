@@ -1,5 +1,5 @@
 import { error } from "nodex-libs";
-import {Class, Constructor} from "../libs/Class"
+import { Constructor} from "../libs/Class"
 
 export class Module {
     private _name: string;
@@ -70,21 +70,6 @@ export class ModuleManager {
         else {
             const m = this.modules.get(nameOrType.name)
             return m as T;
-        }
-    }
-
-    
-}
-
-export let ModuleInstaller = {
-    install(module: Module):void{}
-};
-
-export function Install() {
-    return function<T extends Class>(target: T) {
-        if(ModuleInstaller) {
-            const module = new target();
-            ModuleInstaller.install(module);
         }
     }
 }

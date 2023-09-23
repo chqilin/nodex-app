@@ -1,36 +1,39 @@
 
 import * as libs from "nodex-libs"
-import { ModuleManager } from "./Module"
+import { IoC } from "../libs/IoC";
+import { Constructor } from '../libs/Class';
+
+export interface ApplicationOptions {
+    name: string;
+    modulePaths: string[];
+}
 
 export class Application {
-    private _name: string;
+    private _options: ApplicationOptions;
     private _running: boolean;
-    private _modules: ModuleManager;
+    private _ioc: IoC;
 
-    constructor(name: string) {
-        this._name = name;
-        this._modules = new ModuleManager();
+    constructor(options: ApplicationOptions) {
+        this._options = options;
+        this._ioc = new IoC();
         this._running = true;
 
-        libs.log.init(name);
+        libs.log.init(options.name);
     }
 
     public async run(): Promise<void> {
-        console.log(`app '${this.name}' init...`);
-        await this._modules.init();
+        const options = this._options;
 
-        await this._modules.ready();
-
-        while(this._running) {
-            await libs.util.delay(0.001);
+        console.log(`app '${options.name}' init...`);
+        for(const p of options.modulePaths) {
+            this._ioc.load(`${process.cwd()}/${p}`);
         }
 
         console.log(`app '${this.name}' quit.`);
-        await this._modules.quit();
     }
 
     public get name(): string {
-        return this._name;
+        return this._options.name;
     }
 
     public get running(): boolean {
@@ -40,7 +43,7 @@ export class Application {
         this._running = value;
     }
 
-    public get modules(): ModuleManager {
-        return this._modules;
+    public get<T>(idOrType: string | Constructor<T>): T {
+        return this._ioc.get(idOrType);
     }
 }
